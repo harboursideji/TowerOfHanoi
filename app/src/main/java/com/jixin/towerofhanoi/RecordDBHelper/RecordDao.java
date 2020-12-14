@@ -13,6 +13,12 @@ public class RecordDao {
     private final RecordDBHelper recordDBHelper;
     private SQLiteDatabase database;
 
+    private final static String ADD_SQL = "insert into UserRecord(name,grade) values(?,?)";
+    private final static String DELETE_SQL = "delete from UserRecord where name=?";
+    private final static String FIND_SQL = "select * from UserRecord where name=?";
+    private final static String FIND_ALL_SQL = "select * from UserRecord";
+    private final static String UPDATE_SQL = "update UserRecord set grade=? where name=?";
+
     public RecordDao(Context context){
         recordDBHelper=new RecordDBHelper(context);
         database=recordDBHelper.getWritableDatabase();
@@ -22,8 +28,7 @@ public class RecordDao {
         if(!database.isOpen()){
             database=recordDBHelper.getWritableDatabase();
         }
-        String sql="insert into UserRecord(name,grade) values(?,?)";
-        database.execSQL(sql,new Object[]{name,grade});
+        database.execSQL(ADD_SQL,new Object[]{name,grade});
         database.close();
     }
 
@@ -31,8 +36,7 @@ public class RecordDao {
         if(!database.isOpen()){
             database=recordDBHelper.getWritableDatabase();
         }
-        String sql="delete from UserRecord where name=?";
-        database.execSQL(sql,new Object[]{name});
+        database.execSQL(DELETE_SQL,new Object[]{name});
         database.close();
     }
 
@@ -41,8 +45,7 @@ public class RecordDao {
         if (!database.isOpen()){
             database=recordDBHelper.getWritableDatabase();
         }
-        String sql="select * from UserRecord where name=?";
-        Cursor cursor=database.rawQuery(sql,new String[]{name});
+        Cursor cursor=database.rawQuery(FIND_SQL,new String[]{name});
         if(cursor.moveToFirst()){
             cursor.close();
             result=true;
@@ -56,13 +59,14 @@ public class RecordDao {
         if(!database.isOpen()){
             database=recordDBHelper.getWritableDatabase();
         }
-        Cursor cursor=database.rawQuery("select * from UserRecord",null);
+        Cursor cursor=database.rawQuery(FIND_ALL_SQL,null);
         while (cursor.moveToNext()){
             Record record=new Record();
             record.setId(cursor.getString(cursor.getColumnIndex("name")));
             record.setGrade(cursor.getString(cursor.getColumnIndex("grade")));
             list.add(record);
         }
+        cursor.close();
         database.close();
         return list;
     }
@@ -71,8 +75,7 @@ public class RecordDao {
         if (!database.isOpen()){
             database=recordDBHelper.getWritableDatabase();
         }
-        String sql="update UserRecord set grade=? where name=?";
-        database.execSQL(sql,new Object[]{grade,name});
+        database.execSQL(UPDATE_SQL,new Object[]{grade,name});
         database.close();
     }
 
