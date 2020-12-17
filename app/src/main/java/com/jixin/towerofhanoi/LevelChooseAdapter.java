@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class LevelChooseAdapter extends RecyclerView.Adapter<LevelChooseAdapter.ViewHolder> {
-    private Context mContext;
-    private List<String> mList;
+    private final Context mContext;
+    private final List<String> mList;
     private SharedPreferences sp;
 
     public LevelChooseAdapter(Context context,List<String> list){
@@ -56,8 +56,8 @@ public class LevelChooseAdapter extends RecyclerView.Adapter<LevelChooseAdapter.
 
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        private Button button;
+    public static class ViewHolder extends RecyclerView.ViewHolder{
+        private final Button button;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

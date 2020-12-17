@@ -35,10 +35,10 @@ public class GameActivity extends AppCompatActivity {
 
     private SharedPreferences sp;
 
-    private static int moveAnimationDuration=2000;
-    private static int alphaAnimationDuration=1000;
+    private static final int moveAnimationDuration=2000;
+    private static final int alphaAnimationDuration=1000;
 
-    private static int dishHeight=60;
+    private static final int dishHeight=60;
 
     private ImageView holdDishView;
     private LinearLayout gameView;
@@ -135,7 +135,10 @@ public class GameActivity extends AppCompatActivity {
         for(int i=0;i<hanoiLevel;i++){
             LinearLayout itemLayout=(LinearLayout) LayoutInflater.from(GameActivity.this).inflate(R.layout.item_dish,null);
             itemLayout.setId(i);
+            TextView textView = itemLayout.findViewById(R.id.tv_dishId);
+            textView.setText(String.valueOf(i+1));
             itemLayout.setBackgroundColor(colors[i%colors.length]);
+            textView.setTextColor(colors[(i+1)%colors.length]);
             LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(screenWidth/3-(hanoiLevel-i)*20,dishHeight);
             params.leftMargin=(hanoiLevel-i)*10;
             itemLayout.setLayoutParams(params);
@@ -290,10 +293,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private boolean isFinish(){
-        if(hanoiTowerA.getSize()==0&&(hanoiTowerC.getSize()==0||hanoiTowerB.getSize()==0)){
-            return true;
-        }
-        return false;
+        return hanoiTowerA.getSize() == 0 && (hanoiTowerC.getSize() == 0 || hanoiTowerB.getSize() == 0);
     }
 
     private void showDialog(){

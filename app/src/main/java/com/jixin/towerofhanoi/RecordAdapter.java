@@ -13,8 +13,8 @@ import java.util.List;
 
 public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder> {
 
-    private Context mContext;
-    private List<Record> mList;
+    private final Context mContext;
+    private final List<Record> mList;
 
 
     public RecordAdapter(Context context,List<Record>list){
@@ -41,9 +41,9 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView playerId;
-        private TextView playerGrade;
+    public static class ViewHolder extends RecyclerView.ViewHolder{
+        private final TextView playerId;
+        private final TextView playerGrade;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
